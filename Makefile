@@ -6,7 +6,7 @@
 #    By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/08 13:43:15 by htaheri           #+#    #+#              #
-#    Updated: 2023/10/08 17:14:50 by htaheri          ###   ########.fr        #
+#    Updated: 2023/10/09 13:20:37 by htaheri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,5 +35,6 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
 
 .PHONY: all clean fclean re
