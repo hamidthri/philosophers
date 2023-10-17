@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:55 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/08 15:36:23 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:46:21 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	is_valid_integer(char **args)
 {
 	int		i;
 
-	i = 0;
+	i = 2;
 	while (args[i])
 	{
 		if (!is_digit(args[i]))
