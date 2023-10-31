@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:04:49 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/30 16:08:31 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/31 15:41:04 by iwillens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	start_thread(t_data *data)
 	i = 0;
 	while (i < data->n_phil)
 	{
-		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
-		data->philo[i].data = data;
 		data->philo[i].last_eat = current_time();
-		data->philo[i].eat_counter = 0;
 		if (pthread_create(&(data->philo[i].tid), NULL,
 				routin, &(data->philo[i])) != 0)
 		{
@@ -34,7 +31,7 @@ void	start_thread(t_data *data)
 		if (i >= data->n_phil && !(i % 2))
 		{
 			i = 1;
-			usleep(1000);
+	//		usleep(1000);
 		}
 	}
 	pthread_create(&check, NULL, check_status, data);
@@ -54,8 +51,11 @@ void	initialize_philo(t_data *data)
 	while (i < data->n_phil)
 	{
 		data->philo[i].n = i + 1;
-		pthread_mutex_init(&fork_array[i], NULL);
+		data->philo[i].eat_counter = 0;
+		data->philo[i].data = data;
 		data->philo[i].fork_right = &fork_array[i];
+		pthread_mutex_init(&fork_array[i], NULL);
+		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
 		if (i == data->n_phil - 1)
 			data->philo[0].fork_left = &fork_array[i];
 		else
@@ -72,6 +72,7 @@ void	parse_variable(char **argv)
 {
 	t_data	*data;
 
+	/* dont forget to protect this if malloc fails*/
 	data = malloc(sizeof(t_data));
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->dead, NULL);
@@ -81,6 +82,8 @@ void	parse_variable(char **argv)
 	data->t_eat = ft_atoi(argv[3]);
 	data->t_sleep = ft_atoi(argv[4]);
 	data->n_eat = 0;
+
+	/* dont forget to protect this if malloc fails*/
 	data->philo = malloc(sizeof(t_philo) * data->n_phil);
 	if (argv[5])
 		data->n_eat = ft_atoi(argv[5]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:17:25 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/30 15:41:19 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/31 15:39:46 by iwillens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ typedef struct s_data
 	int					t_sleep;
 	int					n_eat;
 	int					someone_died;
+	int					someone_finished;
 	pthread_mutex_t		mtx_someone_died;
 	int					ph_stop;
 	struct s_philo		*philo;
 	pthread_mutex_t		print;
 	pthread_mutex_t		dead;
+	pthread_mutex_t		finished;
 	pthread_mutex_t		stop;
 }t_data;
 
@@ -62,4 +64,6 @@ void			exit_philos(t_data *data);
 int				eat_enough(t_data *data);
 int				has_someone_eaten_enough(t_data *data);
 void			set_someone_eaten_enough(t_data *data);
+int				is_someone_finished(t_data *data);
+
 #endif

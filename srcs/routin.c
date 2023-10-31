@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:51:59 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/30 16:24:24 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/31 15:42:20 by iwillens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*routin(void *arg)
 	t_philo		*philo;
 
 	philo = (t_philo *)arg;
-	while (!eat_enough(philo->data) && !is_someone_dead(philo->data))
+	while (!is_someone_finished(philo->data) && !is_someone_dead(philo->data))
 	{
 		taking_fork(philo);
 		eating(philo);
