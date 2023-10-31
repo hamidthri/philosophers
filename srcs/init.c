@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:18:30 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/29 14:57:51 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:08:03 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ int	is_someone_dead(t_data *data)
 		return (1);
 	}
 	pthread_mutex_unlock(&(data->dead));
+	return (0);
+}
+
+int	test(t_philo *philo)
+{
+	int		count;
+
+	count = 0;
+	if (!philo->data->n_eat)
+		return (0);
+	pthread_mutex_lock(&(philo->eating_mtx));
+	if (philo->eat_counter == philo->data->n_eat)
+	{
+		return (1);
+		pthread_mutex_unlock(&(philo->eating_mtx));
+	}
+	pthread_mutex_unlock(&(philo->eating_mtx));
 	return (0);
 }
 
@@ -52,7 +69,7 @@ void	*check_status(void *args)
 	int		i;
 
 	data = (t_data *)args;
-	while (!is_someone_dead(data) && !eat_enough(data))
+	while (!eat_enough(data) && !is_someone_dead(data))
 	{
 		i = 0;
 		while (i < data->n_phil)
@@ -71,7 +88,6 @@ void	*check_status(void *args)
 				pthread_mutex_unlock(&(data->philo[i].eating_mtx));
 			i++;
 		}
-		pause_time(1);
 	}
 	i = 0;
 	while (i < data->n_phil)

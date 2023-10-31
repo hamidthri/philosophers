@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:17:25 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/29 12:55:06 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/30 15:41:19 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ typedef struct s_data
 	int					t_sleep;
 	int					n_eat;
 	int					someone_died;
-	int					eaten_enough;
 	pthread_mutex_t		mtx_someone_died;
 	int					ph_stop;
 	struct s_philo		*philo;
 	pthread_mutex_t		print;
 	pthread_mutex_t		dead;
-	pthread_mutex_t		mtx_eaten_enough;
 	pthread_mutex_t		stop;
 }t_data;
 

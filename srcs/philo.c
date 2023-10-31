@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:04:49 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/29 14:47:55 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:08:31 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	start_thread(t_data *data)
 	i = 0;
 	while (i < data->n_phil)
 	{
+		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
 		data->philo[i].data = data;
 		data->philo[i].last_eat = current_time();
 		data->philo[i].eat_counter = 0;
@@ -33,7 +34,7 @@ void	start_thread(t_data *data)
 		if (i >= data->n_phil && !(i % 2))
 		{
 			i = 1;
-			pause_time(1);
+			usleep(1000);
 		}
 	}
 	pthread_create(&check, NULL, check_status, data);
@@ -61,7 +62,6 @@ void	initialize_philo(t_data *data)
 			data->philo[i + 1].fork_left = &fork_array[i];
 		i++;
 	}
-	free (fork_array);
 	// ft_bzero(data, sizeof(t_data));
 	data->t_start = current_time();
 	data->someone_died = 0;
@@ -73,6 +73,9 @@ void	parse_variable(char **argv)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->dead, NULL);
+	pthread_mutex_init(&data->stop, NULL);
 	data->n_phil = ft_atoi(argv[1]);
 	data->t_die = ft_atoi(argv[2]);
 	data->t_eat = ft_atoi(argv[3]);
