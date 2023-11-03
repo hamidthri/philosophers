@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:04:49 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/31 15:41:04 by iwillens         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:02:33 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,15 @@ void	start_thread(t_data *data)
 	while (i < data->n_phil)
 	{
 		data->philo[i].last_eat = current_time();
+		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
+
 		if (pthread_create(&(data->philo[i].tid), NULL,
 				routin, &(data->philo[i])) != 0)
 		{
 			perror("pthread_create");
 			return ;
 		}
-		i += 2;
-		if (i >= data->n_phil && !(i % 2))
-		{
-			i = 1;
-	//		usleep(1000);
-		}
+		i++;
 	}
 	pthread_create(&check, NULL, check_status, data);
 	i = 0;
@@ -55,7 +52,6 @@ void	initialize_philo(t_data *data)
 		data->philo[i].data = data;
 		data->philo[i].fork_right = &fork_array[i];
 		pthread_mutex_init(&fork_array[i], NULL);
-		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
 		if (i == data->n_phil - 1)
 			data->philo[0].fork_left = &fork_array[i];
 		else

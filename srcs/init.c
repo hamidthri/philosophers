@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:18:30 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/31 15:36:33 by iwillens         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:30:02 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,6 @@ void	set_someone_finished(t_data *data)
 	pthread_mutex_unlock(&(data->finished));
 }
 
-int	test(t_philo *philo)
-{
-	int		count;
-
-	count = 0;
-	if (!philo->data->n_eat)
-		return (0);
-	pthread_mutex_lock(&(philo->eating_mtx));
-	if (philo->eat_counter == philo->data->n_eat)
-	{
-		return (1);
-		pthread_mutex_unlock(&(philo->eating_mtx));
-	}
-	pthread_mutex_unlock(&(philo->eating_mtx));
-	return (0);
-}
 
 int	eat_enough(t_data *data)
 {
@@ -94,7 +78,7 @@ void	*check_status(void *args)
 		while (i < data->n_phil)
 		{
 			pthread_mutex_lock(&(data->philo[i].eating_mtx));
-			if (current_time() - data->philo[i].last_eat > data->t_die)
+			if (current_time() - data->philo[i].last_eat >= data->t_die)
 			{
 				pthread_mutex_lock(&(data->mtx_someone_died));
 				print(data->philo, " died");
@@ -106,14 +90,8 @@ void	*check_status(void *args)
 			else
 				pthread_mutex_unlock(&(data->philo[i].eating_mtx));
 
-
-			/*code for checking finished*/
 			if (eat_enough(data))
 				set_someone_finished(data);
-
-
-
-
 			i++;
 		}
 	}
