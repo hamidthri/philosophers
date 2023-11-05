@@ -6,12 +6,12 @@
 #    By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/08 13:43:15 by htaheri           #+#    #+#              #
-#    Updated: 2023/11/03 17:31:56 by htaheri          ###   ########.fr        #
+#    Updated: 2023/11/03 17:37:09 by htaheri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		philosophers
-CFLAGS		=		-Wall -Wextra -Werror
+CFLAGS		=		-Wall -Wextra -Werror  -g
 CC			=		cc
 SRCS		=		srcs/philo.c srcs/utils.c srcs/init.c srcs/routin.c srcs/print.c
 

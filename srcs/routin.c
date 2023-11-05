@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:51:59 by htaheri           #+#    #+#             */
-/*   Updated: 2023/11/03 17:32:37 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/04 14:05:55 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ void	eating(t_philo *philo)
 	{
 		print(philo, " is eating");
 		pthread_mutex_lock(&(philo->eating_mtx));
+		philo->eat_counter++;
 		philo->last_eat = current_time();
 		pthread_mutex_unlock(&(philo->eating_mtx));
 		pause_time(philo->data->t_eat);
-		pthread_mutex_lock(&(philo->eating_mtx));
-		philo->eat_counter++;
-		pthread_mutex_unlock(&(philo->eating_mtx));
 		pthread_mutex_unlock(philo->fork_left);
 		pthread_mutex_unlock(philo->fork_right);
 	}
@@ -59,16 +57,20 @@ void	*routin(void *arg)
 	t_philo		*philo;
 
 	philo = (t_philo *)arg;
-
 	if ((philo->n + 1) % 2)
-		pause_time(philo->data->t_eat / 2);
-	while (!is_someone_finished(philo->data) && !is_someone_dead(philo->data))
+		pause_time(philo->data->t_eat / 10);
+	while (!eat_enough(philo->data) && !is_someone_finished(philo->data) 
+			&& !is_someone_dead(philo->data))
 	{
 		taking_fork(philo);
 		eating(philo);
-		print(philo, " is sleeping");
-		pause_time(philo->data->t_sleep);
-		print(philo, " is thinking");
+		if (!eat_enough(philo->data) && !is_someone_finished(philo->data))
+		{
+			print(philo, " is sleeping");
+			pause_time(philo->data->t_sleep);
+		}
+		if (!eat_enough(philo->data) && !is_someone_finished(philo->data))
+			print(philo, " is thinking");
 	}
 	return (NULL);
 }

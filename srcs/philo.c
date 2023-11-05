@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:04:49 by htaheri           #+#    #+#             */
-/*   Updated: 2023/11/03 17:02:33 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/03 18:51:04 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	start_thread(t_data *data)
 	{
 		data->philo[i].last_eat = current_time();
 		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
-
 		if (pthread_create(&(data->philo[i].tid), NULL,
 				routin, &(data->philo[i])) != 0)
 		{
@@ -38,13 +37,15 @@ void	start_thread(t_data *data)
 	pthread_join(check, NULL);
 }
 
-void	initialize_philo(t_data *data)
+pthread_mutex_t	*initialize_philo(t_data *data)
 {
 	int				i;
 	pthread_mutex_t	*fork_array;
 
 	i = 0;
 	fork_array = malloc(sizeof(pthread_mutex_t) * data->n_phil);
+	if (!fork_array)
+		perror("Memory allocation failed");
 	while (i < data->n_phil)
 	{
 		data->philo[i].n = i + 1;
@@ -58,18 +59,27 @@ void	initialize_philo(t_data *data)
 			data->philo[i + 1].fork_left = &fork_array[i];
 		i++;
 	}
-	// ft_bzero(data, sizeof(t_data));
 	data->t_start = current_time();
 	data->someone_died = 0;
 	start_thread(data);
+	return (fork_array);
+}
+
+void	free_datas(pthread_mutex_t *forks, t_data *data, t_philo *philo)
+{
+	free(forks);
+	free(data);
+	free(philo);
 }
 
 void	parse_variable(char **argv)
 {
-	t_data	*data;
+	t_data			*data;
+	pthread_mutex_t	*forks;
 
-	/* dont forget to protect this if malloc fails*/
 	data = malloc(sizeof(t_data));
+	if (!data)
+		perror("Memory allocation failed");
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->dead, NULL);
 	pthread_mutex_init(&data->stop, NULL);
@@ -78,14 +88,15 @@ void	parse_variable(char **argv)
 	data->t_eat = ft_atoi(argv[3]);
 	data->t_sleep = ft_atoi(argv[4]);
 	data->n_eat = 0;
-
-	/* dont forget to protect this if malloc fails*/
 	data->philo = malloc(sizeof(t_philo) * data->n_phil);
+	if (!data->philo)
+		perror("Memory allocation failed");
 	if (argv[5])
 		data->n_eat = ft_atoi(argv[5]);
 	if (argv[5] && data->n_eat == 0)
 		return ;
-	initialize_philo(data);
+	forks = initialize_philo(data);
+	free_datas(forks, data, data->philo);
 }
 
 int	main(int argc, char **argv)
