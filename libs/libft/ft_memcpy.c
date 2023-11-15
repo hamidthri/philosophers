@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:26:41 by htaheri           #+#    #+#             */
-/*   Updated: 2023/04/09 21:45:01 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:30:15 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		*d = *s;
 		d++;
 		s++;
-	}	
+	}
 	return (dest);
 }

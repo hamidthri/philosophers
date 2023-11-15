@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 12:18:30 by htaheri           #+#    #+#             */
-/*   Updated: 2023/11/04 13:34:18 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 18:08:51 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,10 @@ void	*check_status(void *args)
 				pthread_mutex_unlock(&(data->philo[i].eating_mtx));
 				break ;
 			}
-			else
-				pthread_mutex_unlock(&(data->philo[i].eating_mtx));
+			pthread_mutex_unlock(&(data->philo[i++].eating_mtx));
 			if (eat_enough(data))
 				set_someone_finished(data);
-			i++;
 		}
 	}
-	i = 0;
-	while (i < data->n_phil)
-		pthread_mutex_unlock(data->philo[i++].fork_right);
-	return (NULL);
+	return (exit_code(data));
 }

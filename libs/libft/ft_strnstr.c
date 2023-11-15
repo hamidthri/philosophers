@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 12:13:08 by htaheri           #+#    #+#             */
-/*   Updated: 2023/04/09 21:50:29 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:30:50 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 				return ((char *) &haystack[i]);
 			j++;
 		}
-	i++;
+		i++;
 	}
 	return (NULL);
 }

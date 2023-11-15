@@ -6,11 +6,12 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:14:11 by htaheri           #+#    #+#             */
-/*   Updated: 2023/07/29 12:20:37 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:31:38 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
+# define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
 

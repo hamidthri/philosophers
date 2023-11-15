@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 19:42:44 by htaheri           #+#    #+#             */
-/*   Updated: 2023/07/25 14:12:19 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:29:47 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_atoi(const char *str)
 	if (str[i] == '+' || str[i] == '-')
 	{
 		if (str[i] == '-')
-				flag *= -1;
+			flag *= -1;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')

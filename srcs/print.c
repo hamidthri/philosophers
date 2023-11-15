@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 12:58:03 by htaheri           #+#    #+#             */
-/*   Updated: 2023/10/31 15:39:15 by iwillens         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:21:16 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@ long long	current_time(void)
 
 void	print(t_philo *philo, char *str)
 {
-	pthread_mutex_lock(&(philo->data->print));
-	if (!(is_someone_dead(philo->data)) && !is_someone_finished(philo->data))
+	pthread_mutex_lock(&(philo->data->dead));
+	if (!philo->data->someone_died && !eat_enough(philo->data))
 	{
+		pthread_mutex_lock(&(philo->data->print));
 		printf("%lld %d %s\n", current_time() - philo->data->t_start,
 			philo->n, str);
+		pthread_mutex_unlock(&(philo->data->print));
 	}
-	pthread_mutex_unlock(&(philo->data->print));
+	pthread_mutex_unlock(&(philo->data->dead));
 }
 
 void	pause_time(int t)
 {
-	long long	time;
+	long int	time;
 
 	time = current_time();
 	while (current_time() - time < t)
-		usleep(t / 100);
+		usleep(t / 10);
 }

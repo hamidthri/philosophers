@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 19:30:26 by htaheri           #+#    #+#             */
-/*   Updated: 2023/04/09 21:37:25 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:29:59 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	*ft_calloc(size_t count, size_t size)
 	{
 		while (counter--)
 		{
-		*s = 0;
-		s++;
+			*s = 0;
+			s++;
 		}
 	}
 	return (ptr);

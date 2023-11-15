@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:04:49 by htaheri           #+#    #+#             */
-/*   Updated: 2023/11/03 18:51:04 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 17:58:26 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	start_thread(t_data *data)
 	pthread_t		check;
 
 	i = 0;
+	data->someone_died = 0;
+	data->someone_finished = 0;
 	while (i < data->n_phil)
 	{
 		data->philo[i].last_eat = current_time();
-		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
 		if (pthread_create(&(data->philo[i].tid), NULL,
 				routin, &(data->philo[i])) != 0)
 		{
@@ -53,6 +54,7 @@ pthread_mutex_t	*initialize_philo(t_data *data)
 		data->philo[i].data = data;
 		data->philo[i].fork_right = &fork_array[i];
 		pthread_mutex_init(&fork_array[i], NULL);
+		pthread_mutex_init(&(data->philo[i].eating_mtx), NULL);
 		if (i == data->n_phil - 1)
 			data->philo[0].fork_left = &fork_array[i];
 		else
@@ -60,7 +62,6 @@ pthread_mutex_t	*initialize_philo(t_data *data)
 		i++;
 	}
 	data->t_start = current_time();
-	data->someone_died = 0;
 	start_thread(data);
 	return (fork_array);
 }
@@ -83,6 +84,8 @@ void	parse_variable(char **argv)
 	pthread_mutex_init(&data->print, NULL);
 	pthread_mutex_init(&data->dead, NULL);
 	pthread_mutex_init(&data->stop, NULL);
+	pthread_mutex_init(&data->finished, NULL);
+	pthread_mutex_init(&data->mtx_someone_died, NULL);
 	data->n_phil = ft_atoi(argv[1]);
 	data->t_die = ft_atoi(argv[2]);
 	data->t_eat = ft_atoi(argv[3]);
@@ -102,7 +105,7 @@ void	parse_variable(char **argv)
 int	main(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
-		return (0);
+		return (1);
 	if (!is_valid_integer(argv))
 		return (1);
 	parse_variable(argv);

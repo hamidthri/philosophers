@@ -6,7 +6,7 @@
 /*   By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 18:03:24 by htaheri           #+#    #+#             */
-/*   Updated: 2023/04/09 21:49:47 by htaheri          ###   ########.fr       */
+/*   Updated: 2023/11/05 13:30:25 by htaheri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ size_t	ft_strlen(const char *str)
 
 	len = 0;
 	while (*(str + len) != '\0')
-			len++;
+		len++;
 	return (len);
 }

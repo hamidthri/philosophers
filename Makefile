@@ -6,12 +6,12 @@
 #    By: htaheri <htaheri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/08 13:43:15 by htaheri           #+#    #+#              #
-#    Updated: 2023/11/03 17:37:09 by htaheri          ###   ########.fr        #
+#    Updated: 2023/11/05 18:15:24 by htaheri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		philosophers
-CFLAGS		=		-Wall -Wextra -Werror  -g
+CFLAGS		=		-Wall -Wextra -Werror -g
 CC			=		cc
 SRCS		=		srcs/philo.c srcs/utils.c srcs/init.c srcs/routin.c srcs/print.c
 
@@ -25,7 +25,7 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(SRCS) -L$(LIBFT_DIR) -lft -o $(NAME) -lpthread
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
